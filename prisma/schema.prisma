@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  id String @id @default(uuid())
+  ownerDomain String
+  owner ServiceAccount @relation(fields: [ownerDomain], references: [domain])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("project")
+}
+
+model Repository {
+  id String @id @default(uuid())
+  name String @unique
+  artifactId Artifact[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("repository")
+}
+
+model Artifact {
+  id String @id @default(uuid())
+  digest String @unique
+  repositoryId String
+  repository Repository @relation(fields: [repositoryId], references: [id])
+  tags Tag[]
+  @@map("artifact")
+}
+
+model Tag {
+  id String @id @default(uuid())
+  name String @unique
+  pullTime DateTime?
+  pushTime DateTime
+  isImmutable Boolean @default(false)
+  isSigned Boolean @default(false)
+  artifactId String
+  artifact Artifact @relation(fields: [artifactId], references: [id])
+  @@map("tag")
+}
+
+model ServiceAccount {
+  domain String @id
+  password String
+  role String
+  projects Project[]
+  @@map("service_account")
+}
+
+

@@ -1,0 +1,26 @@
+{
+  "name": "prisma-genumerate",
+  "version": "1.0.0",
+  "bin": {
+    "prisma-genumerate": "bin/index.js"
+  },
+  "description": "",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "repository": "",
+  "author": {
+    "name": "Nguyen Pham Quoc Minh",
+    "email": "minhlucky2408@gmail.com",
+    "url": "https://github.com/bietdoikiem"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/sdk": "^3.1.1",
+    "arg": "^5.0.1",
+    "prettier": "^2.4.1",
+    "prisma": "^3.1.1"
+  }
+}
