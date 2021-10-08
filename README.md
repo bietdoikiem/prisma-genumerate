@@ -1,4 +1,4 @@
-# Prisma Genumerate - A generator for model enumerates in Typescript
+# Prisma Genumerate V2 - A generator for model enumerates in Typescript
 
 <p align="center">
 <img alt="coffee-gif" width="176px" height="176px" src="https://media4.giphy.com/media/bsxxq0b0N5PdBqALlf/giphy.gif?cid=790b76114c47998bd0226dbe643042a22cd2899855381fc2&rid=giphy.gif&ct=g" />
