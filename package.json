@@ -1,15 +1,19 @@
 {
   "name": "prisma-genumerate",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "bin": {
     "prisma-genumerate": "bin/index.js"
   },
-  "description": "A little CLI tool which help developers to quickly generate Typescript enumerates based on Prisma model.",
+  "description": "A little CLI tool which help developers to quickly generate Typescript enumerates based on Prisma model. V2 is out now!",
   "main": "bin/index.js",
   "files": [
-    "bin/index.js"
+    "bin/index.js",
+    "dist"
   ],
   "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -21,8 +25,14 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@prisma/generator-helper": "^3.2.1",
+    "@prisma/sdk": "^3.2.1",
     "arg": "^5.0.1",
     "prettier": "^2.4.1",
     "prisma": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/prettier": "^2.4.1",
+    "typescript": "^4.4.3"
   }
 }

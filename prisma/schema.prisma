@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "blank"
 }
 
 generator client {
@@ -11,50 +11,72 @@ generator client {
 }
 
 model Project {
-  id String @id @default(uuid())
+  id          String         @id @default(uuid())
   ownerDomain String
-  owner ServiceAccount @relation(fields: [ownerDomain], references: [domain])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  owner       ServiceAccount @relation(fields: [ownerDomain], references: [domain])
+  status      Status?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
   @@map("project")
 }
 
 model Repository {
-  id String @id @default(uuid())
-  name String @unique
-  artifactId Artifact[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String     @id @default(uuid())
+  name      String     @unique
+  artifacts Artifact[]
+  status    Status?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
   @@map("repository")
 }
 
 model Artifact {
-  id String @id @default(uuid())
-  digest String @unique
+  id           String     @id @default(uuid())
+  digest       String     @unique
   repositoryId String
-  repository Repository @relation(fields: [repositoryId], references: [id])
-  tags Tag[]
+  status       Status?
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  tags         Tag[]
+
   @@map("artifact")
 }
 
 model Tag {
-  id String @id @default(uuid())
-  name String @unique
-  pullTime DateTime?
-  pushTime DateTime
-  isImmutable Boolean @default(false)
-  isSigned Boolean @default(false)
-  artifactId String
-  artifact Artifact @relation(fields: [artifactId], references: [id])
+  id          String    @id @default(uuid())
+  name        String    @unique
+  pullTime    DateTime?
+  pushTime    DateTime
+  isImmutable Boolean   @default(false)
+  isSigned    Boolean   @default(false)
+  artifactId  String
+  artifact    Artifact  @relation(fields: [artifactId], references: [id])
+  status      Status?
+
   @@map("tag")
 }
 
 model ServiceAccount {
-  domain String @id
+  domain   String    @id
   password String
-  role String
+  role     String
   projects Project[]
+  status   Status?
+
   @@map("service_account")
 }
 
+enum State {
+  READY
+  DELETED
+  ERROR
+  CREATING
+  UPDATING
+}
 
+enum Status {
+  ACTIVE
+  DISABLED
+  OFFLINE
+}
